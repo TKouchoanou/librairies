@@ -3,7 +3,6 @@ package persistence.jpa.repository;
 import org.springframework.data.repository.CrudRepository;
 import persistence.jpa.mapper.GenericJpaMapper;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -14,19 +13,21 @@ public abstract class GenericCrudRepository<D, E, ID, R extends CrudRepository<E
 
 
     M mapper;
-    R repository ;
+    R repository;
 
     public GenericCrudRepository(M mapper, R repository) {
         this.mapper = mapper;
         this.repository = repository;
     }
 
-    public  D save(D domain) {
+    public D save(D domain) {
         E entity = this.getMapper().convertToJpa(domain);
-        return  this.getMapper().convertToDomain(this.getRepository().save(entity));
+        return this.getMapper().convertToDomain(this.getRepository().save(entity));
     }
 
-
+    public void saveAll(List<D> domains) {
+        getRepository().saveAll(getMapper().convertToJpa(domains));
+    }
 
     public Optional<D> findById(ID id) {
         return this.getRepository().findById(id).map(this.getMapper()::convertToDomain);
@@ -45,6 +46,13 @@ public abstract class GenericCrudRepository<D, E, ID, R extends CrudRepository<E
         return this.getMapper().convertToDomain(entities);
     }
 
+    public List<D> findAllByIds(List<ID> ids) {
+        List<E> entities = StreamSupport
+                .stream(this.getRepository().findAllById(ids).spliterator(), false)
+                .collect(Collectors.toList());
+        return this.getMapper().convertToDomain(entities);
+    }
+
 
     public long count() {
         return this.getRepository().count();
@@ -55,13 +63,21 @@ public abstract class GenericCrudRepository<D, E, ID, R extends CrudRepository<E
         this.getRepository().delete(this.getMapper().convertToJpa(domain));
     }
 
-     R getRepository(){
-        return repository;
-     };
+    public void deleteAll(List<D> domain) {
+        this.getRepository().deleteAll(this.getMapper().convertToJpa(domain));
+    }
 
-    M getMapper(){
+    R getRepository() {
+        return repository;
+    }
+
+    ;
+
+    M getMapper() {
         return mapper;
-    };
+    }
+
+    ;
 
 
 }

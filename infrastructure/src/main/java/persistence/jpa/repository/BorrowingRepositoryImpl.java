@@ -2,6 +2,7 @@ package persistence.jpa.repository;
 
 import domain.model.entities.Borrowing;
 import domain.model.valueObject.BorrowStatus;
+import domain.model.valueObject.ReturnStatus;
 import domain.repository.BorrowingRepository;
 import org.springframework.stereotype.Repository;
 import persistence.jpa.entities.BorrowingJpa;
@@ -24,5 +25,15 @@ public class BorrowingRepositoryImpl  extends GenericCrudRepository<Borrowing, B
     @Override
     public List<Borrowing> findAllOnGoing() {
         return this.getMapper().convertToDomain(getRepository().findByBorrowStatus(BorrowStatus.ONGOING));
+    }
+
+    @Override
+    public List<Borrowing> findAllOnGoingForMember(Long memberId) {
+        return this.getMapper().convertToDomain(getRepository().findByMemberIdAndBorrowStatus(memberId,BorrowStatus.ONGOING));
+    }
+
+    @Override
+    public List<Borrowing> findAllDelayed() {
+        return this.getMapper().convertToDomain(this.getRepository().findByBorrowStatusAndReturnStatus(BorrowStatus.ONGOING, ReturnStatus.DELAYED));
     }
 }

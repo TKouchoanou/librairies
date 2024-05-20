@@ -1,12 +1,15 @@
 package persistence.jpa.entities;
 
-import domain.model.valueObject.MemberStatus;
+import domain.model.valueObject.MemberAccountStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Getter
 @Builder
@@ -16,6 +19,8 @@ import lombok.NoArgsConstructor;
 public class MemberJpa {
     @Id
     Long id;
-    MemberStatus status;
+    MemberAccountStatus status;
+    @OneToMany
+    List<BlockingJpa> currentBlockings;
 
 }
