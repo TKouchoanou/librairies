@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+
 @Service
 public class BlockedDelayedBorrowMemberCommandHandler implements CommandHandler<BlockedDelayedBorrowMemberCommand> {
 
@@ -30,7 +31,7 @@ public class BlockedDelayedBorrowMemberCommandHandler implements CommandHandler<
 
 
     @Override
-    public void handle(BlockedDelayedBorrowMemberCommand command,HandlingContext handlingContext) {
+    public void handle(BlockedDelayedBorrowMemberCommand command, HandlingContext handlingContext) {
 
         Predicate<Borrowing> toDayDelayedPredicate = dateDelayedPredicate(LocalDate.now());
 

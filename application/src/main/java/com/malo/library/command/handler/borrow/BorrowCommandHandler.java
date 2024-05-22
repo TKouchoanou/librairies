@@ -29,8 +29,8 @@ public class BorrowCommandHandler implements CommandHandler<BorrowCommand> {
     MemberRepository memberRepository;
 
     @Override
-    public void handle(BorrowCommand command,HandlingContext handlingContext) {
-        System.out.println("command "+command);
+    public void handle(BorrowCommand command, HandlingContext handlingContext) {
+
         Member member = this.memberRepository.findById(command.getMemberId()).orElseThrow(() -> new RuntimeException("member not found "));
 
         if (member.isNotActive()) {
@@ -43,21 +43,28 @@ public class BorrowCommandHandler implements CommandHandler<BorrowCommand> {
 
         Book book = this.bookRepository.findById(command.getBookId());
 
-        if(book.notFound()){
+        if (book.notFound()) {
             throw new RuntimeException(" book is not found");
         }
 
-        if(book.notAvailable()){
+        if (book.notAvailable()) {
             throw new RuntimeException(" book is not available");
         }
 
-        if(this.borrowingRepository.isBookCurrentlyBorrowedByMember(book.getId(), member.getId())){
+        if (this.borrowingRepository.isBookCurrentlyBorrowedByMember(book.getId(), member.getId())) {
             throw new RuntimeException("The member has already borrowed this book.");
         }
 
-        if(this.borrowingRepository.countOnGoingForMember(command.getMemberId()) >= MAX_BORROW_BY_MEMBER){
-            throw new RuntimeException("you are not allowed to borrow  than "+MAX_BORROW_BY_MEMBER+" book");
+        if (this.borrowingRepository.countOnGoingForMember(command.getMemberId()) >= MAX_BORROW_BY_MEMBER) {
+            throw new RuntimeException("you are not allowed to borrow  than " + MAX_BORROW_BY_MEMBER + " book");
         }
+
+        if(!this.bookRepository.borrowOne(book.getId())){
+            throw new RuntimeException("fail to borrow the book");
+
+        }
+
+        handlingContext.doOnFailure(()->this.bookRepository.restoreOne(book.getId()));
 
         Borrowing borrowing = Borrowing.builder()
                 .memberId(command.getMemberId())
@@ -68,10 +75,10 @@ public class BorrowCommandHandler implements CommandHandler<BorrowCommand> {
                 .returnStatus(ReturnStatus.ONTIME)
                 .build();
 
-       borrowingRepository.save(borrowing);
+        borrowingRepository.save(borrowing);
     }
 
-    public void init(){
+    public void init() {
         this.memberRepository.save(Member.builder().id(1L).status(MemberAccountStatus.ACTIVE).build());
     }
 }

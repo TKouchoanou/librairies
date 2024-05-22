@@ -10,17 +10,18 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused","rawtypes"})
 @Component
-public class CommandRoutingImpl implements CommandRouting{
+public class CommandRoutingImpl implements CommandRouting {
     ApplicationContext context;
-    public CommandRoutingImpl(ApplicationContext context){
-        this.context=context;
+
+    public CommandRoutingImpl(ApplicationContext context) {
+        this.context = context;
     }
 
     @Override
     public List<CommandHandler> getHandlers(Command cmd) {
-        Command.Usecase usecase= getCommandUseCaseAnnotation(cmd);
+        Command.UseCase usecase = getCommandUseCaseAnnotation(cmd);
         return Stream.of(usecase.handlers()).map(context::getBean).collect(Collectors.toList());
     }
 
@@ -34,10 +35,10 @@ public class CommandRoutingImpl implements CommandRouting{
         return getCommandUseCaseAnnotation(cmd).isolation();
     }
 
-   private Command.Usecase getCommandUseCaseAnnotation(Command cmd){
-        Command.Usecase useCaseAnnotation = cmd.getClass().getAnnotation(Command.Usecase.class);
-        if(Objects.isNull(useCaseAnnotation)){
-          throw new RuntimeException(" command "+cmd.getClass()+" is not use case annotation");
+    private Command.UseCase getCommandUseCaseAnnotation(Command cmd) {
+        Command.UseCase useCaseAnnotation = cmd.getClass().getAnnotation(Command.UseCase.class);
+        if (Objects.isNull(useCaseAnnotation)) {
+            throw new RuntimeException(" command " + cmd.getClass() + " is not use case annotation");
         }
         return useCaseAnnotation;
     }

@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Command.Usecase(handlers = {BorrowCommandHandler.class})
+@Command.UseCase(handlers = {BorrowCommandHandler.class})
 public class BorrowCommand implements Command {
 
    public Long memberId;

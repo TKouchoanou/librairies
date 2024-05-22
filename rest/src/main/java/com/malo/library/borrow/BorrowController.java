@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 public class BorrowController {
@@ -27,14 +28,14 @@ public class BorrowController {
         cmd.setMemberId(1L);
         cmd.setReturnedDate(LocalDate.now().plusDays(5));
         cmd.setPickUpDate(LocalDate.now());
-       commandManager.process(cmd);
+      var res =  commandManager.process(cmd);
     }
 
     @GetMapping("/restitute")
     void restitute() {
         var cmd = new ReturnCommand();
 
-        cmd.setBorrowIds(List.of(1L));
+        cmd.setBorrowIds(Set.of(1L));
         cmd.setMemberId(1L);
 
         commandManager.process(cmd);

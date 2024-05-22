@@ -1,9 +1,9 @@
-package com.malo.library.jpa.repository.jpa;
+package com.malo.library.orm.jpa.repository.jpa;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import com.malo.library.jpa.entities.BlockingJpa;
+import com.malo.library.orm.jpa.entities.BlockingJpa;
 
 import java.time.LocalDate;
 import java.util.List;

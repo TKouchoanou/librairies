@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
-@Command.Usecase(handlers = {BlockedDelayedBorrowMemberCommandHandler.class})
+@Command.UseCase(handlers = {BlockedDelayedBorrowMemberCommandHandler.class})
 public class BlockedDelayedBorrowMemberCommand implements Command {
     LocalDate date;
 }

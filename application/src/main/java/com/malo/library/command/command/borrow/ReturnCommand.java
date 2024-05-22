@@ -6,14 +6,16 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
+
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Command.Usecase(handlers = {ReturnCommandHandler.class})
+@Command.UseCase(handlers = {ReturnCommandHandler.class})
 public class ReturnCommand implements Command {
-    List<Long> borrowIds;
+    Set<Long> borrowIds;
     Long memberId;
     LocalDate effectiveReturnedDate;
 }

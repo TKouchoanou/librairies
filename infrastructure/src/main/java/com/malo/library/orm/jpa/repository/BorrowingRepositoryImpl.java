@@ -1,18 +1,17 @@
-package com.malo.library.jpa.repository;
+package com.malo.library.orm.jpa.repository;
 
-import com.malo.library.jpa.mapper.BorrowingJpaMapper;
+import com.malo.library.orm.jpa.mapper.BorrowingJpaMapper;
 import com.malo.library.domain.model.entities.Borrowing;
 import com.malo.library.domain.model.valueObject.BorrowStatus;
 import com.malo.library.domain.model.valueObject.ReturnStatus;
 import com.malo.library.domain.repository.BorrowingRepository;
+import com.malo.library.orm.jpa.entities.BorrowingJpa;
+import com.malo.library.orm.jpa.repository.jpa.BorrowingJpaRepository;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
-import com.malo.library.jpa.entities.BorrowingJpa;
-import com.malo.library.jpa.repository.jpa.BorrowingJpaRepository;
 
 import java.util.List;
 @Component
-public class BorrowingRepositoryImpl  extends GenericCrudRepository<Borrowing, BorrowingJpa,Long,BorrowingJpaRepository, BorrowingJpaMapper> implements BorrowingRepository {
+public class BorrowingRepositoryImpl  extends GenericCrudRepository<Borrowing, BorrowingJpa,Long, BorrowingJpaRepository, BorrowingJpaMapper> implements BorrowingRepository {
 
     public BorrowingRepositoryImpl(BorrowingJpaMapper mapper, BorrowingJpaRepository repository) {
         super(mapper, repository);

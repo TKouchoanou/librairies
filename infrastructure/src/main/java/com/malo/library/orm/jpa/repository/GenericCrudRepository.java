@@ -1,6 +1,7 @@
-package com.malo.library.jpa.repository;
+package com.malo.library.orm.jpa.repository;
 
-import com.malo.library.jpa.mapper.GenericJpaMapper;
+import com.malo.library.orm.jpa.Identifiable;
+import com.malo.library.orm.jpa.mapper.GenericJpaMapper;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 
-public abstract class GenericCrudRepository<D, E, ID, R extends CrudRepository<E, ID>, M extends GenericJpaMapper<D, E>> {
+public abstract class GenericCrudRepository<D, E extends  Identifiable<ID>, ID, R extends CrudRepository<E, ID>, M extends GenericJpaMapper<D, E>> {
 
 
     M mapper;
@@ -23,6 +24,11 @@ public abstract class GenericCrudRepository<D, E, ID, R extends CrudRepository<E
     public D save(D domain) {
         E entity = this.getMapper().convertToJpa(domain);
         return this.getMapper().convertToDomain(this.getRepository().save(entity));
+    }
+
+    public ID saves(D domain) {
+        E entity = this.getMapper().convertToJpa(domain);
+        return this.getRepository().save(entity).getId();
     }
 
     public void saveAll(List<D> domains) {

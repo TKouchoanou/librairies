@@ -1,4 +1,4 @@
-package com.malo.library.jpa.mapper;
+package com.malo.library.orm.jpa.mapper;
 
 import java.util.List;
 

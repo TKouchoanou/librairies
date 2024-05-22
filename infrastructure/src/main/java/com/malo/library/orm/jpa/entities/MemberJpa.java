@@ -1,6 +1,7 @@
-package com.malo.library.jpa.entities;
+package com.malo.library.orm.jpa.entities;
 
 import com.malo.library.domain.model.valueObject.MemberAccountStatus;
+import com.malo.library.orm.jpa.Identifiable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "member")
-public class MemberJpa {
+public class MemberJpa implements Identifiable<Long> {
     @Id
     Long id;
     MemberAccountStatus status;

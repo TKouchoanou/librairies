@@ -52,4 +52,8 @@ public class Borrowing {
     public boolean isDelayed(){
         return  this.returnStatus.equals(ReturnStatus.DELAYED) ;
     }
+
+    public boolean isOnGoing(){
+        return  this.borrowStatus.equals(BorrowStatus.ONGOING) ;
+    }
 }

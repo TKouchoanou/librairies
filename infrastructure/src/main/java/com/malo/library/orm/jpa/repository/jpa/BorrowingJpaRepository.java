@@ -1,9 +1,9 @@
-package com.malo.library.jpa.repository.jpa;
+package com.malo.library.orm.jpa.repository.jpa;
 
 import com.malo.library.domain.model.valueObject.BorrowStatus;
 import com.malo.library.domain.model.valueObject.ReturnStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.malo.library.jpa.entities.BorrowingJpa;
+import com.malo.library.orm.jpa.entities.BorrowingJpa;
 
 import java.util.List;
 

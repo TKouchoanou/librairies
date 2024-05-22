@@ -1,14 +1,17 @@
-package com.malo.library.jpa.entities;
+package com.malo.library.orm.jpa.entities;
 
+import com.malo.library.orm.jpa.Identifiable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
 @Table(name = "blocking")
-public class BlockingJpa extends PeriodicJpa {
+public class BlockingJpa extends PeriodicJpa implements Identifiable<Long> {
     @Id
     public Long id;
 

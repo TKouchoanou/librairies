@@ -1,4 +1,4 @@
-package com.malo.library.jpa.entities;
+package com.malo.library.orm.jpa.entities;
 
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;

@@ -1,7 +1,8 @@
-package com.malo.library.jpa.entities;
+package com.malo.library.orm.jpa.entities;
 
 import com.malo.library.domain.model.valueObject.BorrowStatus;
 import com.malo.library.domain.model.valueObject.ReturnStatus;
+import com.malo.library.orm.jpa.Identifiable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,7 +17,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "borrowing")
-public class BorrowingJpa {
+public class BorrowingJpa implements Identifiable<Long> {
     @Id
     @GeneratedValue
     Long id ;

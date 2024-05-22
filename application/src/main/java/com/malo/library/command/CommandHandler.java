@@ -3,21 +3,23 @@ package com.malo.library.command;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface CommandHandler <C extends Command> {
+public interface CommandHandler<C extends Command> {
 
-    void handle(C command,HandlingContext handlingContext);
+    void handle(C command, HandlingContext handlingContext);
 
-    class HandlingContext{
+    class HandlingContext {
         private final List<Runnable> onSuccessActions = new ArrayList<>();
         private final List<Runnable> onFailureActions = new ArrayList<>();
-        public void doOnSuccess(Runnable runnable){
+
+        public void doOnSuccess(Runnable runnable) {
             this.onSuccessActions.add(runnable);
         }
 
-        public Iterable<Runnable> getOnSuccessActions(){
+        public Iterable<Runnable> getOnSuccessActions() {
             return this.onSuccessActions;
         }
-        public void doOnFailure(Runnable runnable){
+
+        public void doOnFailure(Runnable runnable) {
             this.onFailureActions.add(runnable);
         }
 
