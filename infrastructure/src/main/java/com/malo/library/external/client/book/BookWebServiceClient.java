@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "bookLibrary",url = "localhost:8088/library/v1/books")
+@FeignClient(name = "bookLibrary",url = "${api.book.url}")
 public interface BookWebServiceClient {
     @GetMapping(value = "/{bookId}/availabilities")
    BookAvailabilityResult availabilities(@PathVariable("bookId") Long bookId);

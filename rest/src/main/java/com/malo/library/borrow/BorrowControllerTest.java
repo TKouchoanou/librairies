@@ -2,22 +2,19 @@ package com.malo.library.borrow;
 
 import com.malo.library.command.CommandManager;
 import com.malo.library.command.command.borrow.BorrowCommand;
-import com.malo.library.command.CommandHandler;
 import com.malo.library.command.command.borrow.ReturnCommand;
-import com.malo.library.command.handler.borrow.BorrowCommandHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Set;
 
 @RestController
-public class BorrowController {
+public class BorrowControllerTest {
 
     CommandManager commandManager;
 
-    public BorrowController(CommandManager commandManager) {
+    public BorrowControllerTest(CommandManager commandManager) {
         this.commandManager = commandManager;
     }
 
