@@ -21,7 +21,7 @@ public class BorrowController {
         this.commandManager = commandManager;
     }
 
-    @GetMapping("/borrow")
+    @GetMapping("/borrowBook")
     void borrow() {
         var cmd = new BorrowCommand();
         cmd.setBookId(1L);
@@ -31,7 +31,7 @@ public class BorrowController {
       var res =  commandManager.process(cmd);
     }
 
-    @GetMapping("/restitute")
+    @GetMapping("/returnBook")
     void restitute() {
         var cmd = new ReturnCommand();
 

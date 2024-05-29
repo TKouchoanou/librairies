@@ -13,6 +13,7 @@ import java.time.LocalDate;
 @ToString
 @Command.UseCase(handlers = {BorrowCommandHandler.class})
 public class BorrowCommand implements Command {
+   Long id ;
 
    public Long memberId;
 
@@ -22,4 +23,8 @@ public class BorrowCommand implements Command {
 
    public LocalDate returnedDate;
 
+   @Override
+   public boolean checkValidityAfterHandling(StringBuilder violationsMessage) {
+      return id!=null && id!=0;
+   }
 }
