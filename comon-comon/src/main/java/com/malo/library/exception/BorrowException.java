@@ -21,10 +21,11 @@ public interface BorrowException<E extends BorrowExceptionKey> {
 
     E getKey();
 
-    List<? extends Serializable> getParams();
 
-    String getShortDescription();
-    
-    Throwable getException();
+    String getCustomMessage();
+
+    Object getData();
+
+
 
 }

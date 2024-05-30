@@ -18,4 +18,6 @@ public interface BorrowExceptionKey {
     
     String name();
 
+    String getMessage();
+
 }
