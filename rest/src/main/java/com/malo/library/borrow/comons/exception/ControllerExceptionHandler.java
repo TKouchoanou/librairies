@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
+
 @RestControllerAdvice
 public class ControllerExceptionHandler {
     @ExceptionHandler(BusinessException.class)
@@ -20,6 +21,15 @@ public class ControllerExceptionHandler {
                 .errorCode(keyEnum.getMappedHttpCode())
                 .build();
 
+        return new ResponseEntity<>(errorDto, httpStatus);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<GenericErrorDto> handleException(Exception ex) {
+
+        HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+        GenericErrorDto errorDto = GenericErrorDto.builder(httpStatus, "une erreur non identifié est survenue")
+                .build();
         return new ResponseEntity<>(errorDto, httpStatus);
     }
 }
