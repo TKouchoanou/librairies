@@ -1,11 +1,13 @@
 package com.malo.library.command;
 
+import com.malo.library.exception.business.BusinessException;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public interface CommandHandler<C extends Command> {
 
-    void handle(C command, HandlingContext handlingContext);
+    void handle(C command, HandlingContext handlingContext) throws BusinessException;
 
     class HandlingContext {
         private final List<Runnable> onSuccessActions = new ArrayList<>();

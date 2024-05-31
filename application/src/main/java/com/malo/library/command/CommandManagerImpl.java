@@ -1,6 +1,8 @@
 package com.malo.library.command;
 
 
+import com.malo.library.exception.business.BusinessException;
+import com.malo.library.exception.business.BusinessExceptionWrapper;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -34,7 +36,7 @@ public class CommandManagerImpl implements CommandManager {
 
 
     @Override
-    public <T extends Command> T process(T command) {
+    public <T extends Command> T process(T command) throws BusinessException {
 
         logger.info(RECEIVED_COMMAND_LOG_FORMAT, command.getClass().getName());
 
@@ -60,6 +62,10 @@ public class CommandManagerImpl implements CommandManager {
                 logger.warn(ROLLBACK_LOG_FORMAT, command.getClass().getName(), exception.getMessage());
                 platformTransactionManager.rollback(transactionStatus);
             }
+
+            if(exception instanceof BusinessExceptionWrapper exceptionWrapped){
+                exceptionWrapped.throwWrappedCheckedException();
+            }
             exception.printStackTrace();
 
             throw exception;
@@ -70,13 +76,19 @@ public class CommandManagerImpl implements CommandManager {
     public void handleParallel(List<CommandHandler> commandHandlerList, Command command, CommandHandler.HandlingContext context) {
         CompletableFuture<?>[] workers = commandHandlerList
                 .stream()
-                .map(handler -> CompletableFuture.runAsync(() -> handler.handle(command, context)))
+                .map(handler -> CompletableFuture.runAsync(() -> {
+                    try {
+                        handler.handle(command, context);
+                    } catch (BusinessException e) {
+                        throw new BusinessExceptionWrapper(e);
+                    }
+                }))
                 .toArray(CompletableFuture[]::new);
         CompletableFuture.allOf(workers).join();
 
     }
 
-    public void handleSequentially(List<CommandHandler> commandHandlerList, Command command, CommandHandler.HandlingContext context) {
+    public void handleSequentially(List<CommandHandler> commandHandlerList, Command command, CommandHandler.HandlingContext context) throws BusinessException {
         for (CommandHandler commandHandler : commandHandlerList) {
             commandHandler.handle(command, context);
         }
