@@ -21,6 +21,7 @@ public class BorrowingJpa implements Identifiable<Long> {
     @Id
     @GeneratedValue
     Long id ;
+
     @Column(name = "member_id")
     Long memberId;
 

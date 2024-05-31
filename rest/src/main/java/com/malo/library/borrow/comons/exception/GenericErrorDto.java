@@ -17,10 +17,10 @@ public class GenericErrorDto {
 
     private  Object data;
 
-    private int errorCode;
+    private String errorCode;
 
     @Builder(builderMethodName = "hiddenBuilder")
-    public GenericErrorDto(LocalDateTime createdDate, HttpStatus httpStatus, String message, String customMessage, Object data, int errorCode) {
+    public GenericErrorDto(LocalDateTime createdDate, HttpStatus httpStatus, String message, String customMessage, Object data, String errorCode) {
         this.createdDate = (createdDate != null) ? createdDate : LocalDateTime.now();
         this.httpStatus = httpStatus;
         this.message = message;

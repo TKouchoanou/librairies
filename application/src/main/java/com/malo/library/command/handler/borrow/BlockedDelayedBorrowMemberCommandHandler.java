@@ -53,28 +53,9 @@ public class BlockedDelayedBorrowMemberCommandHandler implements CommandHandler<
                 .startDate(LocalDateTime.now())
                 .endDate(LocalDateTime.now().plus(DEFAULT_BLOCKING_PERIOD))
                 .build();
+        this.blockingRepository.deleteAll(this.blockingRepository.findAtCurrentDateForMember(memberId));
         borrowings.forEach(Borrowing::markedAsDelayed);
         this.borrowingRepository.saveAll(borrowings);
         this.blockingRepository.save(blocking);
     }
-
-    /*
-
-      void blockedMember(Long memberId, List<Borrowing> borrowings) {
-        LocalDate today = LocalDate.now();
-        Borrowing moreDelayed = borrowings.stream().min(Comparator.comparing(Borrowing::getReturnedDate)).orElseThrow();
-        Period maxDelayedPeriod = Period.between(today,moreDelayed.getReturnedDate().minusDays(1));
-
-        if(borrowings.stream().allMatch(borrowing -> borrowing.getBorrowStatus().equals(BorrowStatus.RETURNED))){
-
-        }
-
-         List<Blocking> currentBlockings = this.blockingRepository.findCurrentForMember(memberId);
-
-        Blocking blocking = Blocking.builder().memberId(memberId).endDate(today).build();
-
-        this.blockingRepository.save()
-    }
-
-    */
 }

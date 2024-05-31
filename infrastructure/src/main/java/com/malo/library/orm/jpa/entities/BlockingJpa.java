@@ -13,12 +13,13 @@ import lombok.NoArgsConstructor;
 @Table(name = "blocking")
 public class BlockingJpa extends PeriodicJpa implements Identifiable<Long> {
     @Id
+    @GeneratedValue
     public Long id;
 
-    @Column(name ="member_id" ,insertable = false,updatable = false)
+    @Column(name ="member_id")
     public Long memberId;
 
     @ManyToOne
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "member_id",insertable = false,updatable = false)
     MemberJpa member;
 }

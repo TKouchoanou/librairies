@@ -3,7 +3,7 @@ package com.malo.library.exception.business;
 import lombok.Getter;
 /*
 * */
-public class BusinessExceptionWrapper extends RuntimeException implements CheckedToUncheckedWrapper<BusinessExceptionKeyEnum,BusinessException> {
+public class BusinessExceptionWrapper extends RuntimeException implements CheckedToUncheckedWrapper<BusinessExceptionKey,BusinessException> {
     @Getter
     BusinessException wrapped;
 

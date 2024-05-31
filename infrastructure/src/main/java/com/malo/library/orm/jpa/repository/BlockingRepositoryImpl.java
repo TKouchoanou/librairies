@@ -8,6 +8,7 @@ import com.malo.library.orm.jpa.repository.jpa.BlockingJpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -17,8 +18,8 @@ public class BlockingRepositoryImpl extends GenericCrudRepository<Blocking, Bloc
     }
 
     @Override
-    public List<Blocking> findCurrentForMember(Long memberId) {
-        List<BlockingJpa> blockings = getRepository().findBlockingsByMemberIdAndStartDateBeforeAndEndDateAfter(memberId, LocalDate.now());
+    public List<Blocking> findAtCurrentDateForMember(Long memberId) {
+        List<BlockingJpa> blockings = getRepository().findBlockingsByMemberIdAndStartDateBeforeAndEndDateAfter(memberId, LocalDateTime.now());
         return this.getMapper().convertToDomain(blockings);
     }
 }

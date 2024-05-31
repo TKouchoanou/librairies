@@ -11,6 +11,8 @@ import com.malo.library.domain.model.valueObject.ReturnStatus;
 import com.malo.library.domain.repository.BookRepository;
 import com.malo.library.domain.repository.BorrowingRepository;
 import com.malo.library.domain.repository.MemberRepository;
+import com.malo.library.exception.business.BusinessException;
+import com.malo.library.exception.business.BusinessExceptionKey;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -29,39 +31,39 @@ public class BorrowCommandHandler implements CommandHandler<BorrowCommand> {
     MemberRepository memberRepository;
 
     @Override
-    public void handle(BorrowCommand command, HandlingContext handlingContext) {
+    public void handle(BorrowCommand command, HandlingContext handlingContext) throws BusinessException {
 
-        Member member = this.memberRepository.findById(command.getMemberId()).orElseThrow(() -> new RuntimeException("member not found "));
+        Member member = this.memberRepository.findById(command.getMemberId())
+                .orElseThrow(() -> new BusinessException(BusinessExceptionKey.MEMBER_NOT_FOUND, command.getMemberId()));
 
         if (member.isNotActive()) {
-            throw new RuntimeException(" member is inactive");
+            throw new BusinessException(BusinessExceptionKey.MEMBER_IS_INACTIVE, member.getId());
         }
 
         if (member.isBlocked()) {
-            throw new RuntimeException(" member  is blocked");
+            throw new BusinessException(BusinessExceptionKey.MEMBER_IS_BLOCKED, member.getId());
         }
 
         Book book = this.bookRepository.findById(command.getBookId());
 
-        if (book.notFound()) {
-            throw new RuntimeException(" book is not found");
+        if (book.notFound()){
+          throw  new BusinessException(BusinessExceptionKey.BOOK_NOT_FOUND, command.getBookId())  ;
         }
 
         if (book.notAvailable()) {
-            throw new RuntimeException(" book is not available");
+            throw new BusinessException(BusinessExceptionKey.BOOK_NOT_AVAILABLE, book.getId());
         }
 
         if (this.borrowingRepository.isBookCurrentlyBorrowedByMember(book.getId(), member.getId())) {
-            throw new RuntimeException("The member has already borrowed this book.");
+            throw new BusinessException(BusinessExceptionKey.BOOK_ALREADY_BORROWED_BY_MEMBER, book.getId(), member.getId());
         }
 
         if (this.borrowingRepository.countOnGoingForMember(command.getMemberId()) >= MAX_BORROW_BY_MEMBER) {
-            throw new RuntimeException("you are not allowed to borrow  than " + MAX_BORROW_BY_MEMBER + " book");
+            throw new BusinessException(BusinessExceptionKey.MAX_BORROW_LIMIT_REACHED,MAX_BORROW_BY_MEMBER, command.getMemberId());
         }
 
-        if(!this.bookRepository.borrowOne(book.getId())){
-            throw new RuntimeException("fail to borrow the book");
-
+        if (!this.bookRepository.borrowOne(book.getId())) {
+            throw new BusinessException(BusinessExceptionKey.BOOK_BORROW_FAILED, book.getId());
         }
 
         handlingContext.doOnFailure(()->this.bookRepository.restoreOne(book.getId()));

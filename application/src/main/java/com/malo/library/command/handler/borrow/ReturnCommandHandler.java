@@ -7,6 +7,8 @@ import com.malo.library.domain.model.entities.Borrowing;
 import com.malo.library.domain.repository.BlockingRepository;
 import com.malo.library.domain.repository.BookRepository;
 import com.malo.library.domain.repository.BorrowingRepository;
+import com.malo.library.exception.business.BusinessException;
+import com.malo.library.exception.business.BusinessExceptionKey;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -29,7 +31,7 @@ public class ReturnCommandHandler implements CommandHandler<ReturnCommand> {
     }
 
     @Override
-    public void handle(ReturnCommand command, HandlingContext handlingContext) {
+    public void handle(ReturnCommand command, HandlingContext handlingContext) throws BusinessException {
 
         List<Borrowing> ongoingBorrowings = borrowingRepository.findAllOnGoingForMember(command.getMemberId());
 
@@ -58,9 +60,9 @@ public class ReturnCommandHandler implements CommandHandler<ReturnCommand> {
             fixMemberBlockingPeriodScope(memberId, ongoingBorrowings);
     }
 
-    private void validateReturnedBorrowingOwnerShip(Set<Long> commandBorrowIds, Set<Long> ongoingBorrowingIds) {
+    private void validateReturnedBorrowingOwnerShip(Set<Long> commandBorrowIds, Set<Long> ongoingBorrowingIds) throws BusinessException {
         if (!ongoingBorrowingIds.containsAll(commandBorrowIds)) {
-            throw new RuntimeException("Incoherent command: check borrows owned for user and ongoing");
+            throw  new BusinessException(BusinessExceptionKey.RETURNED_BORROW_NOT_OWNED_BY_MEMBER);
         }
     }
 
@@ -100,7 +102,7 @@ public class ReturnCommandHandler implements CommandHandler<ReturnCommand> {
         LocalDateTime startDate = LocalDateTime.now();
         LocalDateTime endDate = startDate.plus(longestDelayedPeriod);
 
-        List<Blocking> currentBlockings = this.blockingRepository.findCurrentForMember(memberId);
+        List<Blocking> currentBlockings = this.blockingRepository.findAtCurrentDateForMember(memberId);
 
         Blocking blocking = Blocking.builder()
                 .memberId(memberId)
