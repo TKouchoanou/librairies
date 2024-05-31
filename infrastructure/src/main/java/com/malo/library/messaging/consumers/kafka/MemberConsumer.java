@@ -2,6 +2,7 @@ package com.malo.library.messaging.consumers.kafka;
 
 import com.malo.library.avro.UserDto;
 import com.malo.library.command.CommandManager;
+import com.malo.library.exception.business.BusinessException;
 import com.malo.library.messaging.consumers.kafka.mapper.MemberAvroMapper;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
@@ -19,7 +20,7 @@ public class MemberConsumer {
     }
 
     @KafkaListener(topics = "${kafka.user.topic}",containerFactory = "userDTOCommandConcurrentKafkaListenerContainerFactory")
-    void createUSer(UserDto userDTO, Acknowledgment acknowledgment){
+    void createUSer(UserDto userDTO, Acknowledgment acknowledgment) throws BusinessException {
         this.commandManager.process(memberAvroMapper.convertToDto(userDTO));
         acknowledgment.acknowledge();
      }

@@ -3,6 +3,7 @@ package com.malo.library.borrow;
 import com.malo.library.command.CommandManager;
 import com.malo.library.command.command.borrow.BorrowCommand;
 import com.malo.library.command.command.borrow.ReturnCommand;
+import lombok.SneakyThrows;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,6 +20,7 @@ public class BorrowControllerTest {
     }
 
     @GetMapping("/borrowBook")
+    @SneakyThrows
     void borrow() {
         var cmd = new BorrowCommand();
         cmd.setBookId(1L);
@@ -29,6 +31,7 @@ public class BorrowControllerTest {
     }
 
     @GetMapping("/returnBook")
+    @SneakyThrows
     void restitute() {
         var cmd = new ReturnCommand();
 

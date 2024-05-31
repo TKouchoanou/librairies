@@ -3,6 +3,7 @@ package com.malo.library.borrow.returns;
 import com.malo.library.borrow.comons.EndPoints;
 import com.malo.library.borrow.comons.Http;
 import com.malo.library.command.command.borrow.ReturnCommand;
+import com.malo.library.exception.business.BusinessException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -21,5 +22,5 @@ public interface ReturnsControllerApi {
             @ApiResponse(responseCode = Http.StatusCode.OK, description = "Retour enregistré")
     })
     @PostMapping(value = EndPoints.RETURN_PATH, consumes = MediaType.APPLICATION_JSON_VALUE)
-    void handle(@RequestBody ReturnCommand returnCommand);
+    void handle(@RequestBody ReturnCommand returnCommand) throws BusinessException;
 }

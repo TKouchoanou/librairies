@@ -2,6 +2,7 @@ package com.malo.library.borrow.returns;
 
 import com.malo.library.command.CommandManager;
 import com.malo.library.command.command.borrow.ReturnCommand;
+import com.malo.library.exception.business.BusinessException;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -13,7 +14,7 @@ public class ReturnsController implements ReturnsControllerApi{
     }
 
     @Override
-    public void handle(ReturnCommand returnCommand) {
+    public void handle(ReturnCommand returnCommand) throws BusinessException {
         this.commandManager.process(returnCommand);
     }
 }
