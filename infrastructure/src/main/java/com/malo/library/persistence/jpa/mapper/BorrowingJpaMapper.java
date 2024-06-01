@@ -1,7 +1,7 @@
-package com.malo.library.orm.jpa.mapper;
+package com.malo.library.persistence.jpa.mapper;
 
 import com.malo.library.domain.model.entities.Borrowing;
-import com.malo.library.orm.jpa.entities.BorrowingJpa;
+import com.malo.library.persistence.jpa.entities.BorrowingJpa;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring",uses ={MemberJpaMapper.class} )

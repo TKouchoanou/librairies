@@ -1,8 +1,8 @@
-package com.malo.library.orm.jpa.repository.jpa;
+package com.malo.library.persistence.jpa.repository.jpa;
 
+import com.malo.library.persistence.jpa.entities.MemberJpa;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import com.malo.library.orm.jpa.entities.MemberJpa;
 
 import java.util.Optional;
 

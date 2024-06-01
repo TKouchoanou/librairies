@@ -1,6 +1,6 @@
-package com.malo.library.orm.jpa.entities;
+package com.malo.library.persistence.jpa.entities;
 
-import com.malo.library.orm.jpa.Identifiable;
+import com.malo.library.persistence.jpa.Identifiable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

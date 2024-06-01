@@ -1,7 +1,7 @@
-package com.malo.library.orm.jpa.repository;
+package com.malo.library.persistence.jpa.repository;
 
-import com.malo.library.orm.jpa.Identifiable;
-import com.malo.library.orm.jpa.mapper.GenericJpaMapper;
+import com.malo.library.persistence.jpa.Identifiable;
+import com.malo.library.persistence.jpa.mapper.GenericJpaMapper;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

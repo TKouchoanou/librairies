@@ -1,13 +1,12 @@
-package com.malo.library.orm.jpa.repository;
+package com.malo.library.persistence.jpa.repository;
 
 import com.malo.library.domain.model.entities.Blocking;
 import com.malo.library.domain.repository.BlockingRepository;
-import com.malo.library.orm.jpa.entities.BlockingJpa;
-import com.malo.library.orm.jpa.mapper.BlockingJpaMapper;
-import com.malo.library.orm.jpa.repository.jpa.BlockingJpaRepository;
+import com.malo.library.persistence.jpa.entities.BlockingJpa;
+import com.malo.library.persistence.jpa.mapper.BlockingJpaMapper;
+import com.malo.library.persistence.jpa.repository.jpa.BlockingJpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 

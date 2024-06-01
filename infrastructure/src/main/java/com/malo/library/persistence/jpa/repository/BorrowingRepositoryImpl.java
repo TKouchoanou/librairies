@@ -1,12 +1,12 @@
-package com.malo.library.orm.jpa.repository;
+package com.malo.library.persistence.jpa.repository;
 
-import com.malo.library.orm.jpa.mapper.BorrowingJpaMapper;
+import com.malo.library.persistence.jpa.mapper.BorrowingJpaMapper;
 import com.malo.library.domain.model.entities.Borrowing;
 import com.malo.library.domain.model.valueObject.BorrowStatus;
 import com.malo.library.domain.model.valueObject.ReturnStatus;
 import com.malo.library.domain.repository.BorrowingRepository;
-import com.malo.library.orm.jpa.entities.BorrowingJpa;
-import com.malo.library.orm.jpa.repository.jpa.BorrowingJpaRepository;
+import com.malo.library.persistence.jpa.entities.BorrowingJpa;
+import com.malo.library.persistence.jpa.repository.jpa.BorrowingJpaRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

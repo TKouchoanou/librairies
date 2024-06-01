@@ -1,11 +1,11 @@
-package com.malo.library.orm.jpa.repository;
+package com.malo.library.persistence.jpa.repository;
 
-import com.malo.library.orm.jpa.mapper.MemberJpaMapper;
+import com.malo.library.persistence.jpa.mapper.MemberJpaMapper;
 import com.malo.library.domain.model.entities.Member;
 import com.malo.library.domain.repository.MemberRepository;
-import com.malo.library.orm.jpa.repository.jpa.MemberJpaRepository;
+import com.malo.library.persistence.jpa.repository.jpa.MemberJpaRepository;
+import com.malo.library.persistence.jpa.entities.MemberJpa;
 import org.springframework.stereotype.Repository;
-import com.malo.library.orm.jpa.entities.MemberJpa;
 
 @Repository
 public class MemberRepositoryImpl extends GenericCrudRepository<Member, MemberJpa,Long, MemberJpaRepository, MemberJpaMapper> implements MemberRepository {
