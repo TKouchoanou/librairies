@@ -4,10 +4,7 @@ import com.malo.library.domain.model.valueObject.BorrowStatus;
 import com.malo.library.domain.model.valueObject.ReturnStatus;
 import com.malo.library.persistence.jpa.Identifiable;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -32,6 +29,7 @@ public class BorrowingJpa implements Identifiable<Long> {
     LocalDate returnedDate;
 
     LocalDate effectiveReturnedDate;
+    @Setter
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "member_id",insertable = false,updatable = false)
     MemberJpa member;
