@@ -77,8 +77,7 @@ public class BorrowCommandHandler implements CommandHandler<BorrowCommand> {
                 .returnStatus(ReturnStatus.ONTIME)
                 .build();
 
-     Borrowing savedBorrowing = borrowingRepository.save(borrowing);
-     command.setId(savedBorrowing.getId());
+     command.setId(borrowingRepository.save(borrowing));
     }
 
     public void init() {

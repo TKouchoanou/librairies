@@ -15,6 +15,6 @@ public interface BorrowingRepository {
 
     List<Borrowing> findAllByIds(List<Long> id);
 
-    Borrowing save(Borrowing borrowing);
+    Long save(Borrowing borrowing);
     void saveAll(List<Borrowing> borrowings);
 }
